@@ -1,0 +1,7 @@
+raw = "data/raw"
+processed = "data/processed"
+input = "_chat.txt"
+current = "whatsapp-20250910-002822-maap-cleaned.parq"
+inputpath = "whatsapp-20250910-001356-maap.csv"
+datetime_format = "%d-%m-%Y, %H:%M:%S"
+drop_authors =[]
