@@ -1,0 +1,29 @@
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   pyproject.toml
+        modified:   uv.lock
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        config.toml
+        data/
+        logs/
+        notebooks/
+        src/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> git add .
+warning: in the working copy of 'pyproject.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'uv.lock', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/raw/WhatsApp Chat - DAC cie/_chat.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/raw/WhatsApp Chat - Golfmaten/_chat.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/raw/WhatsApp Chat - MAAP/_chat.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/raw/WhatsApp Chat - Tillies & co/_chat.txt', LF will be replaced by CRLF the next time Git touches it      
+warning: in the working copy of 'data/raw/WhatsApp Chat - What's up with golf/_chat.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'data/raw/_chat.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'notebooks/01-cleaning.ipynb', LF will be replaced by CRLF the next time Git touches it

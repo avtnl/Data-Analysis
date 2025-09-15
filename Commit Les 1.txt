@@ -1,0 +1,51 @@
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> git commit -m "Changes after lesson 1, including preprocess.py, settings.py, src, notebooks"
+[main 2eef2c5] Changes after lesson 1, including preprocess.py, settings.py, src, notebooks
+ 40 files changed, 67998 insertions(+), 184 deletions(-)
+ create mode 100644 config.toml
+ create mode 100644 data/processed/dac.xlsx
+ create mode 100644 data/processed/golf-combi.xlsx
+ create mode 100644 data/processed/golf.xlsx
+ create mode 100644 data/processed/maap.xlsx
+ create mode 100644 data/processed/voorganger-golf.xlsx
+ create mode 100644 data/processed/whatsapp-20250910-001006-dac.csv
+ create mode 100644 data/processed/whatsapp-20250910-001247-golf.csv
+ create mode 100644 data/processed/whatsapp-20250910-001356-maap.csv
+ create mode 100644 data/processed/whatsapp-20250910-002822-maap-cleaned.csv
+ create mode 100644 data/processed/whatsapp-20250910-002822-maap-cleaned.parq
+ create mode 100644 data/processed/whatsapp-20250910-004727-golf-cleaned.csv
+ create mode 100644 data/processed/whatsapp-20250910-004727-golf-cleaned.parq
+ create mode 100644 data/processed/whatsapp-20250910-005041-dac-cleaned.csv
+ create mode 100644 data/processed/whatsapp-20250910-005041-dac-cleaned.parq
+ create mode 100644 data/processed/whatsapp-20250910-010952-voorganger-golf.csv
+ create mode 100644 data/processed/whatsapp-20250910-011201-til.csv
+ create mode 100644 data/processed/whatsapp-20250910-012135-til-cleaned.csv
+ create mode 100644 data/processed/whatsapp-20250910-012135-til-cleaned.parq
+ create mode 100644 data/processed/whatsapp-20250910-012654-voorganger-golf-cleaned.csv
+ create mode 100644 data/processed/whatsapp-20250910-012654-voorganger-golf-cleaned.parq
+ create mode 100644 data/raw/WhatsApp Chat - DAC cie/_chat.txt
+ create mode 100644 data/raw/WhatsApp Chat - Golfmaten/_chat.txt
+ create mode 100644 data/raw/WhatsApp Chat - MAAP/_chat.txt
+ create mode 100644 data/raw/WhatsApp Chat - Tillies & co/_chat.txt
+ create mode 100644 data/raw/WhatsApp Chat - What's up with golf/_chat.txt
+ create mode 100644 data/raw/_chat.txt
+ create mode 100644 logs/logfile.log
+ create mode 100644 notebooks/01-cleaning.ipynb
+ create mode 100644 notebooks/02-comparing_categories.ipynb
+ create mode 100644 src/wa_analyzer/__init__.py
+ create mode 100644 src/wa_analyzer/filehandler.py
+ create mode 100644 src/wa_analyzer/humanhasher.py
+ create mode 100644 src/wa_analyzer/model.py
+ create mode 100644 src/wa_analyzer/network_analysis.py
+ create mode 100644 src/wa_analyzer/pathtest.py
+ create mode 100644 src/wa_analyzer/preprocess.py
+ create mode 100644 src/wa_analyzer/settings.py
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> git push origin main
+Enumerating objects: 56, done.
+Counting objects: 100% (56/56), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (45/45), done.
+Writing objects: 100% (53/53), 2.80 MiB | 2.37 MiB/s, done.
+Total 53 (delta 7), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (7/7), completed with 1 local object.
+To https://github.com/avtnl/Data-Analysis.git
+   345e3de..2eef2c5  main -> main
