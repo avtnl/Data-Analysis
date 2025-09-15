@@ -9,6 +9,7 @@ dependencies = [
     "ipykernel>=6.30.1",
     "loguru>=0.7.3",
     "mads-datasets>=0.3.14",
+    "matplotlib>=3.10.6",
     "nbformat>=5.10.4",
     "networkx>=3.4.2",
     "numpy>=2.2.1",
