@@ -1,0 +1,55 @@
+Below some code to generate a plot:
+
+import matplotlib.pyplot as plt
+
+# Define the time span
+years_span = 6.125
+
+# Step 1: Total number of days per category across all years
+total_days = (
+    daily_counts.groupby("volume_category")
+    .size()
+    .reindex(["some", "more", "intense", "crazy"])
+) / years_span
+
+# Step 2: Zero-participation days per author across all years
+author_zero_totals = {}
+for full_name, label in authors.items():
+    zero_days = (
+        daily_counts_extended[daily_counts_extended[f"{label}_zero"]]
+        .groupby("volume_category")
+        .size()
+        .reindex(["some", "more", "intense", "crazy"])
+    ) / years_span
+    author_zero_totals[label] = zero_days
+
+# Step 3: Combine into one DataFrame
+normalized_df = pd.DataFrame({
+    "Total Days (per year)": total_days,
+    "M (zero)": author_zero_totals["M"],
+    "AB (zero)": author_zero_totals["AB"],
+    "PB (zero)": author_zero_totals["PB"],
+    "AvT (zero)": author_zero_totals["AvT"]
+})
+
+# Step 4: Plot the chart
+normalized_df.plot(kind="bar", figsize=(10, 6), colormap="Set2")
+plt.title("Average Days per Year — Total vs Zero Participation")
+plt.ylabel("Average Number of Days per Year")
+plt.xlabel("Message Volume Category")
+plt.xticks(rotation=0)
+plt.legend(title="Author")
+plt.tight_layout()
+plt.show()
+
+
+Fantastic! I like to add some additional requirements.
+Per category
+1) Start with total days (cumulated/ 6.125); always in black
+2) Participation (instead of zero-participation of M; always in blue bold lining, filled with gray
+3) Participation (instead of zero-participation of AB; always in green bold lining, filled with gray
+4) Participation (instead of zero-participation of PB; always in orange bold lining, filled with gray
+5) Participation (instead of zero-participation of AvT; always in red
+6) Title "Anthony is not very active in this WhatsApp group".
+7) No legenda
+8) Madeleine, Anja, Phons and Anthony in black vertical in the bar in black; only for category "some".

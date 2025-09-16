@@ -1,0 +1,175 @@
+PS -> git log
+git takes prompt with ":", which can be ended with "q"
+Alternative:
+PS -> git log --no-pager
+
+===
+
+PS -> uv add ipykernal
+python -m ipykernel install --user --name=my_project --display-name "Python (my_project)"
+
+===
+
+🧠 Bonus Tip
+If you're using uv consistently, you can also add other notebook-related tools like:
+uv add --dev jupyterlab
+
+This keeps your dev dependencies separate and tidy.
+Let me know if you want to automate this setup or create a script that bootstraps your whole environment from scratch. I can help you build a bulletproof workflow
+
+===
+
+You don’t have to close VSCode entirely—but restarting the window is often enough to refresh the kernel list and make sure your newly registered virtual environment shows up.
+🔄 Here's what to do:
+- Press Ctrl + Shift + P (or Cmd + Shift + P on Mac)
+- Type: Developer: Reload Window
+- Hit Enter
+This reloads VSCode without shutting it down, and it’s usually sufficient to:
+- Refresh the Jupyter kernel list
+- Detect your newly added Python (my_project) kernel
+- Sync your notebook with the correct environment
+Once reloaded, open your notebook and click the kernel dropdown in the top-right. Select the one that matches your venv name.
+If you still don’t see it, then yes—closing and reopening VSCode can help. But in most cases, a window reload does the trick.
+Want to test it with a quick cell that confirms your environment is active? I can give you a one-liner.
+
+===
+.venv activation:
+
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> .\.venv\Scripts\Activate
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks> ..\.venv\Scripts\Activate.ps1
+
+===
+
+(.venv) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks> Get-Command python
+
+====
+
+uv sync -v
+which python
+ 
+uv venv .venv
+uv sync
+
+dir .venv\Scripts\python.exe
+
+uv venv .venv --python=3.12
+uv sync
+
+uv python pin 3.12.11
+uv sync
+
+Start-Process .\.venv\Scripts\pip.exe -ArgumentList "show seaborn" -NoNewWindow -Wait
+
+Get-ChildItem .\.venv\Scripts\*.exe
+
+.\.venv\Scripts\python.exe -m ensurepip --upgrade
+
+If a close VS Code. What instructions to run? Only:
+1) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks> ..\.venv\Scripts\Activate.ps1
+2) uv sync
+?
+
+
+I closed and opened VS Code and run below.
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks> ..\.venv\Scripts\Activate.ps1
+>> 
+(.venv) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks> pip list
+Package                   Version     Editable project location
+------------------------- ----------- -----------------------------------------------------
+altair                    5.5.0
+annotated-types           0.7.0
+asttokens                 3.0.0
+attrs                     25.3.0
+blinker                   1.9.0
+cachetools                6.2.0
+certifi                   2025.8.3
+charset-normalizer        3.4.3
+click                     8.2.1
+colorama                  0.4.6
+comm                      0.2.3
+contourpy                 1.3.3
+cycler                    0.12.1
+debugpy                   1.8.16
+decorator                 5.2.1
+executing                 2.2.1
+fonttools                 4.59.2
+gitdb                     4.0.12
+GitPython                 3.1.45
+idna                      3.10
+ipykernel                 6.30.1
+ipython                   9.5.0
+ipython_pygments_lexers   1.1.1
+jaraco.classes            3.4.0
+jaraco.context            6.0.1
+jaraco.functools          4.3.0
+jedi                      0.19.2
+Jinja2                    3.1.6
+joblib                    1.5.2
+jsonschema                4.25.1
+jsonschema-specifications 2025.9.1
+jupyter_client            8.6.3
+jupyter_core              5.8.1
+keyring                   25.6.0
+kiwisolver                1.4.9
+loguru                    0.7.3
+mads-datasets             0.3.14
+MarkupSafe                3.0.2
+matplotlib                3.10.6
+matplotlib-inline         0.1.7
+more-itertools            10.8.0
+my-project                0.1.0       C:\Users\avtnl\Documents\HU\Data Analytics\My_Project
+narwhals                  2.4.0
+nest-asyncio              1.6.0
+networkx                  3.5
+numpy                     2.3.2
+packaging                 25.0
+pandas                    2.3.2
+parso                     0.8.5
+patsy                     1.0.1
+pillow                    11.3.0
+pip                       25.2
+platformdirs              4.4.0
+plotly                    6.3.0
+polars                    1.33.1
+prompt_toolkit            3.0.52
+protobuf                  6.32.0
+psutil                    7.0.0
+pure_eval                 0.2.3
+pyarrow                   21.0.0
+pydantic                  2.11.7
+pydantic_core             2.33.2
+pydeck                    0.9.1
+Pygments                  2.19.2
+pyparsing                 3.2.3
+python-dateutil           2.9.0.post0
+pytz                      2025.2
+pywin32                   311
+pywin32-ctypes            0.2.3
+pyzmq                     27.1.0
+referencing               0.36.2
+requests                  2.32.5
+rpds-py                   0.27.1
+scikit-learn              1.7.1
+scipy                     1.16.1
+seaborn                   0.13.2
+six                       1.17.0
+smmap                     5.0.2
+stack-data                0.6.3
+statsmodels               0.14.5
+streamlit                 1.49.1
+tenacity                  9.1.2
+threadpoolctl             3.6.0
+toml                      0.10.2
+tornado                   6.5.2
+tqdm                      4.67.1
+traitlets                 5.14.3
+typing_extensions         4.15.0
+typing-inspection         0.4.1
+tzdata                    2025.2
+urllib3                   2.5.0
+watchdog                  6.0.0
+wcwidth                   0.2.13
+win32_setctime            1.2.0
+(.venv) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks> 
+
+So far so good. However if a run:

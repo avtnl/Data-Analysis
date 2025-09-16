@@ -1,0 +1,48 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Step 1: Total number of days per category across all years
+total_days = (
+    daily_counts.groupby("volume_category")
+    .size()
+    .reindex(["some", "more", "intense", "crazy"])
+)
+
+# Step 2: Participation days = total - zero-participation
+author_participation = {}
+ordered_labels = ["M", "AB", "PB", "AvT"]
+
+for label in ordered_labels:
+    zero_days = (
+        daily_counts_extended[daily_counts_extended[f"{label}_zero"]]
+        .groupby("volume_category")
+        .size()
+        .reindex(["some", "more", "intense", "crazy"])
+        .fillna(0)
+    )
+    participation_days = total_days - zero_days
+    author_participation[label] = participation_days
+
+# Step 3: Combine into one DataFrame with Total Days first
+participation_df = pd.DataFrame(author_participation)
+participation_df.insert(0, "Total Days", total_days)
+participation_df = participation_df[["Total Days", "M", "AB", "PB", "AvT"]]  # Ensure column order
+participation_df.index.name = "Category"
+
+# Step 4: Plot the chart
+participation_df.plot(kind="bar", figsize=(10, 6), colormap="Set2")
+plt.title("Participation Days per Author by Message Volume Category")
+plt.ylabel("Number of Days")
+plt.xlabel("Message Volume Category")
+plt.xticks(rotation=0)
+plt.legend(title="Author")
+plt.tight_layout()
+plt.show()
+
+Really awesome!!!
+- Title in larger font
+- Some change to x-axis:
+  Replace "some"  by "Some messaging"
+  Replace "more"  by "More messaging"
+  Replace "intense"  by "Intense messaging"
+  Replace "crazy"  by "Insane messaging"

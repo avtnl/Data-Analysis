@@ -1,0 +1,221 @@
+p1 = (
+    df[["author", "message"]]
+    .groupby("author")
+    .count()
+    .sort_values("message", ascending=False)
+)
+
+k = 15
+topk = p1[:k]
+
+However I like to delete all rows having author =="MAAP" first. How to do so?
+
+Next:
+df["is_topk"] = df["author"].apply(lambda x: x in topk_authors)
+df.head()
+Why is athor "MAAP" still in?
+
+How to change df to: 
+df = df[df["author"] != "MAAP"]
+using .loc?
+
+# Filter out "MAAP"
+df = df.loc[df["author"] != "MAAP"]
+df = df.reset_index(drop=True)
+
+# Get top-k authors
+topk_authors = (
+    df[["author", "message"]]
+    .groupby("author")
+    .count()
+    .sort_values("message", ascending=False)
+    .index[:k]
+)
+
+# Tag top-k authors
+df["is_topk"] = df["author"].apply(lambda x: x in topk_authors)
+
+# Preview
+df.head()
+==========
+topk_authors = list(topk.index)
+==========
+df["is_topk"] = df["author"].apply(lambda x: x in topk_authors)
+df.head()
+==========
+plt.figure(figsize=(12, 6))
+sns.barplot(y=p1.index[:k], x="message", data=topk)
+plt.xticks(rotation=90)
+plt.title("Sending the most messages...")
+
+Why still:
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[65], line 2
+      1 plt.figure(figsize=(12, 6))
+----> 2 sns.barplot(y=p1.index[:k], x="message", data=topk)
+      3 plt.xticks(rotation=90)
+      4 plt.title("Sending the most messages...")
+
+File c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\seaborn\categorical.py:2341, in barplot(data, x, y, hue, order, hue_order, estimator, errorbar, n_boot, seed, units, weights, orient, color, palette, saturation, fill, hue_norm, width, dodge, gap, log_scale, native_scale, formatter, legend, capsize, err_kws, ci, errcolor, errwidth, ax, **kwargs)
+   2338 if estimator is len:
+   2339     estimator = "size"
+-> 2341 p = _CategoricalAggPlotter(
+   2342     data=data,
+   2343     variables=dict(x=x, y=y, hue=hue, units=units, weight=weights),
+   2344     order=order,
+   2345     orient=orient,
+   2346     color=color,
+   2347     legend=legend,
+   2348 )
+   2350 if ax is None:
+   2351     ax = plt.gca()
+
+File c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\seaborn\categorical.py:67, in _CategoricalPlotter.__init__(self, data, variables, order, orient, require_numeric, color, legend)
+     56 def __init__(
+     57     self,
+...
+    237 
+    238     # Ignore empty data structures
+    239     if isinstance(val, Sized) and len(val) == 0:
+
+ValueError: Could not interpret value `message` for `x`. An entry with this name does not appear in `data`.
+
+=================
+Below is incorrect. 23.99 doesn' t exist should be max 23:50, sine it's time. How to corret|?
+
+df["hour"] = df["timestamp"].dt.time
+summary_df = df.groupby("author")["hour"].agg(["min", "max"]).reset_index()
+
+
+def convert_to_decimal_hours(timestamp):
+    dec_hour = timestamp.hour + timestamp.minute / 60 + timestamp.second / 3600
+    return dec_hour
+
+
+summary_df["min_x_values"] = summary_df["min"].apply(convert_to_decimal_hours)
+summary_df["max_x_values"] = summary_df["max"].apply(convert_to_decimal_hours)
+
+# Drop the original 'min' and 'max' columns as they are no longer needed
+summary_df = summary_df.drop(["min", "max"], axis=1)
+summary_df.head()
+
+=============
+
+Does
+# Step 1: Convert timestamp to decimal hour
+
+def convert_to_decimal_hours(ts):
+    # Round to 2 decimal places for clarity
+    dec_hour = ts.hour + ts.minute / 60 + ts.second / 3600
+    return round(dec_hour, 2)
+
+# Step 2: Apply conversion
+df["decimal_hour"] = df["timestamp"].apply(convert_to_decimal_hours)
+
+# Step 3: Group by author and get min/max decimal hour
+summary_df = df.groupby("author")["decimal_hour"].agg(["min", "max"]).reset_index()
+
+# Step 4: Rename columns for clarity
+summary_df.rename(columns={"min": "min_x_values", "max": "max_x_values"}, inplace=True)
+
+# Step 5: Preview
+print(summary_df.head())
+
+replace:
+
+# Convert timestamp to decimal hour directly
+def convert_to_decimal_hours(ts):
+    return ts.hour + ts.minute / 60 + ts.second / 3600
+
+# Apply conversion directly to timestamp
+df["decimal_hour"] = df["timestamp"].apply(convert_to_decimal_hours)
+
+# Group by author and get min/max decimal hour
+summary_df = df.groupby("author")["decimal_hour"].agg(["min", "max"]).reset_index()
+
+summary_df.rename(columns={"min": "min_x_values", "max": "max_x_values"}, inplace=True)
+summary_df.head()
+?
+==========
+
+
+Instead of:
+# Filter out "MAAP"
+df = df.loc[df["author"] != "MAAP"]
+df = df.reset_index(drop=True)
+
+p1 = (
+    df[["author", "message"]]
+    .groupby("author")
+    .count()
+    .sort_values("message", ascending=False)
+)
+
+k = 15
+topk = p1[:k]
+I want to count the number of messages (=rows) for a single day. How to do so?
+
+===============
+
+Categorize in 4 buckets: <5 messages, 5-10, 11-20, >20 using code similar to:
+
+import pandas as pd
+
+# Define the time ranges
+time_ranges = ["00:00", "06:00", "08:00", "17:30", "22:00", "23:59"]
+# Define the category labels
+categories = ["night", "morning", "worktimes", "evening", "late"]
+# Categorize the timestamp column
+df["timestamp_category"] = pd.cut(
+    df["timestamp"].dt.time.astype(str),
+    bins=time_ranges,
+    labels=categories,
+    right=False,
+)
+# Display the updated dataframe
+df
+
+Likely using something similar to:
+freq_ranges = [0, 5, 10, 20, 100]
+categories: ["some", "more", "intense", "crazy"]
+
+Print number of daily messages
+
+Error:
+
+KeyError                                  Traceback (most recent call last)
+Cell In[92], line 30
+     21 daily_counts["volume_category"] = pd.cut(
+     22     daily_counts["message_count"],
+     23     bins=freq_ranges,
+     24     labels=categories,
+     25     right=False
+     26 )
+     28 # Count number of days per category per year
+     29 summary = (
+---> 30     daily_counts.groupby(["year", "volume_category"])
+     31     .size()
+     32     .reset_index(name="day_count")
+     33     .pivot(index="year", columns="volume_category", values="day_count")
+     34     .fillna(0)
+     35     .astype(int)
+     36 )
+     38 # Display the summary
+     39 print(summary)
+
+File c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\pandas\core\frame.py:9190, in DataFrame.groupby(self, by, axis, level, as_index, sort, group_keys, observed, dropna)
+   9187 if level is None and by is None:
+   9188     raise TypeError("You have to supply one of 'by' and 'level'")
+-> 9190 return DataFrameGroupBy(
+...
+   1044 elif isinstance(gpr, Grouper) and gpr.key is not None:
+   1045     # Add key to exclusions
+   1046     exclusions.add(gpr.key)
+
+KeyError: 'year'
+
+I like to have all years 2015 -2025 as rows and "some", "more", "intense", "crazy" as columns.
+
+
+Additionally print for every year the indivudual dates and the number of messages only meeting category "crazy".

@@ -1,0 +1,204 @@
+In the folder "code" I initialized git, using "git init".
+Next I create a number of folders and subfolders within this folder "code".
+I now like to install uv.
+
+Questions:
+Can I initialize uv using powershell?
+Within powersell, should I go to the dir "code" and install uv there (using "uv init my_project").
+Does "uv init my_project" make sense or should I do "uv init code" instead or "uv init my_code". What do you think makes sense?
+
+##########
+
+Already executed:
+$ git init
+Initialized empty Git repository in C:/Users/avtnl/Documents/HU/Data Analytics/Code/.git/
+
+Can I somehow change the folder/ dir "Code" to "My_Project"?
+
+##########
+
+I want to do a simple test to see if below in main.py is working:
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+Any suggestions?
+
+##########
+
+hello.py:
+def main():
+    print("Hello from my-project!")
+
+
+if __name__ == "__main__":
+    main()
+
+main.py and hello.py are in the same folder. Can main.py somehow run hello.py?
+
+
+##########
+
+I am getting an error:
+Exception has occurred: ModuleNotFoundError
+No module named 'sklearn'
+  File "C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\main.py", line 5, in <module>
+    from sklearn.datasets import make_classification
+ModuleNotFoundError: No module named 'sklearn'
+
+main.py:
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.datasets import make_classification
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from hello import main
+
+# Call the main function from hello.py
+main()
+
+# Create a small dataset
+np.random.seed(42)
+data = {
+    "x": np.arange(1, 11),
+    "y": np.random.normal(loc=5, scale=2, size=10)
+}
+df = pd.DataFrame(data)
+
+# Print the DataFrame to confirm pandas is working
+print("DataFrame preview:")
+print(df)
+
+# Create a simple Seaborn scatter plot
+sns.set(style="darkgrid")
+sns.scatterplot(data=df, x="x", y="y")
+
+# Show the plot to confirm matplotlib and seaborn are working
+plt.title("Test Plot: Seaborn + Matplotlib")
+plt.xlabel("X values")
+plt.ylabel("Y values")
+plt.show()
+
+# Do a simple test to confirm scikit-learn is working (4 steps)
+
+# Generate synthetic classification data (step 1)
+X, y = make_classification(n_samples=100, n_features=4, random_state=42)
+
+# Split into train and test sets (step 2)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train a simple logistic regression model (step 3)
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# Predict and evaluate (step 4)
+y_pred = model.predict(X_test)
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+installation of scikit-learn was done using "pip install -U scikit-learn".
+
+Any clue what is causing the error?
+
+
+##########
+
+uv was installed, see below:
+
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> uv init .
+Initialized project `my-project` at `C:\Users\avtnl\Documents\HU\Data Analytics\My_Project`
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> uv venv
+Using CPython 3.13.7 interpreter at: C:\Users\avtnl\AppData\Local\Programs\Python\Python313\python.exe
+Creating virtual environment at: .venv
+Activate with: .venv\Scripts\activate
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> uv pip install numpy
+Resolved 1 package in 241ms
+Prepared 1 package in 627ms
+Installed 1 package in 176ms
+ + numpy==2.3.2
+
+Why is numpy not in pyproject.toml?
+
+##########
+
+Can I add below to README.md?
+"
+## Setup
+
+Instructions for installing dependencies and running the project see pyproject.toml.
+"
+
+##########
+
+## Author
+
+- Name: Anthony van Tilburg 
+- Student Number: 1905780
+- Institution: Hogeschool Utrecht (Netherlands) 
+- Course: Master of Informatics | Applied Data Science | Data Analysis & Visualisation
+
+---
+
+## Contents
+
+- `main.py`: Main preliminary script for testing some basic packages
+- `hello.py`: Simple module for testing imports (created by {UV})
+- `README.md`: Project overview and author info
+
+---
+
+## Setup
+
+Instructions for installing dependencies and running the project.
+
+To install dependencies and run the project, refer to the `pyproject.toml` file.  
+This project uses [UV](https://github.com/astral-sh/uv) for dependency management and environment setup.
+
+To create and sync the virtual environment:
+
+```bash
+uv venv
+uv sync
+
+##########
+
+uv was installed, see below:
+
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> uv init .
+Initialized project `my-project` at `C:\Users\avtnl\Documents\HU\Data Analytics\My_Project`
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> uv venv
+Using CPython 3.13.7 interpreter at: C:\Users\avtnl\AppData\Local\Programs\Python\Python313\python.exe
+Creating virtual environment at: .venv
+Activate with: .venv\Scripts\activate
+
+Why don't I have the 2 files below? I thought this was standard.
+.git
+.gitignore
+
+##########
+
+Using git bash:
+
+$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .python-version
+        README.md
+        __pycache__/
+        hello.py
+        main.py
+        pyproject.toml
+        uv.lock
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+
+Q: Should I add all files listed individually or only main.py?

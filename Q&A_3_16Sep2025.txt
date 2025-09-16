@@ -1,0 +1,210 @@
+I am looking for commits in git as below. What am I doing wrong?
+
+PS C:\Users\avtnl> git branch --list
+fatal: not a git repository (or any of the parent directories): .git
+
+Why am I not seeing PS and only a double colon as shared below?
+
+commit 345e3decb673452c591fc2a07b1121099d13121a
+Author: Anthony van Tilburg <avtnl@ziggo.nl>
+Date:   Tue Sep 9 00:22:52 2025 +0200
+
+    Initial commit: project setup and main scripts
+:
+
+See below. I guess no virtual environment, right?
+
+PS C:\Users\avtnl\documents\HU\Data Analytics\my_project> echo $VIRTUAL_ENV
+>>
+PS C:\Users\avtnl\documents\HU\Data Analytics\my_project> 
+
+Looks good, right?
+
+PS C:\Users\avtnl\documents\HU\Data Analytics\my_project> .\.venv\Scripts\Activate
+>>
+(My_Project) PS C:\Users\avtnl\documents\HU\Data Analytics\my_project> 
+
+
+See 2 activities below:
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> uv sync
+Resolved 74 packages in 0.91ms
+Audited 69 packages in 2ms
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> .\.venv\Scripts\Activate
+>> 
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> 
+If I run a notebook I get an error regarding seaborn. But seaborn sould be installed as part of "uv sync". What am I doing wrong?
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+from pathlib import Path
+from loguru import logger
+import warnings
+
+warnings.simplefilter(action="ignore", category=FutureWarning)
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 1
+----> 1 import seaborn as sns
+      2 import matplotlib.pyplot as plt
+      3 import pandas as pd
+
+ModuleNotFoundError: No module named 'seaborn'
+
+pyproject.toml:
+[project]
+name = "my-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "click>=8.1.8",
+    "loguru>=0.7.3",
+    "mads-datasets>=0.3.14",
+    "networkx>=3.4.2",
+    "numpy>=2.2.1",
+    "pandas>=2.2.3",
+    "plotly>=5.24.1",
+    "pyarrow>=18.1.0",
+    "pydantic>=2.10.4",
+    "scikit-learn>=1.6.0",
+    "seaborn>=0.13.2",
+    "statsmodels>=0.14.4",
+    "streamlit>=1.43.1",
+]
+
+[project.scripts]
+"analyzer" = "wa_analyzer.preprocess:main"
+"graphdashboard" = "wa_analyzer.network_cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wa_analyzer"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+I closed VS Code and started it again. The note book is automatically opened and prompt is:
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks> 
+
+Since I closed VS Code do a need to do below all again?
+1) cd ..
+2) uv sunc
+3) .\.venv\Scripts\Activate
+
+Can I run:
+.\.venv\Scripts\Activate
+from: PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks>
+or do I need to do:
+cd ..
+to get to 
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project>
+first?
+
+OK, looking good:
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks> ..\.venv\Scripts\Activate.ps1
+>>
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks> 
+
+Can I check if seaborn is installed now?
+
+No seaborn. Can I do:
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks>  uv add seaborn
+or do I need to do:
+cd ..
+for:
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project>  uv add seaborn?
+
+I don't even see seaborn for (My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project>
+eventhought we did (My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> uv add seaborn before.
+Any idea what is going wrong?
+
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> uv sync
+Resolved 101 packages in 1ms
+Audited 93 packages in 4ms
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> pip list
+Package                 Version
+----------------------- -----------
+asttokens               3.0.0
+colorama                0.4.6
+comm                    0.2.3
+debugpy                 1.8.16
+decorator               5.2.1
+executing               2.2.1
+ipykernel               6.30.1
+ipython                 9.5.0
+ipython_pygments_lexers 1.1.1
+jedi                    0.19.2
+joblib                  1.5.2
+jupyter_client          8.6.3
+jupyter_core            5.8.1
+matplotlib-inline       0.1.7
+nest-asyncio            1.6.0
+numpy                   2.3.2
+packaging               25.0
+parso                   0.8.5
+pip                     25.2
+platformdirs            4.4.0
+prompt_toolkit          3.0.52
+psutil                  7.0.0
+pure_eval               0.2.3
+pygame                  2.6.1
+Pygments                2.19.2
+python-dateutil         2.9.0.post0
+pywin32                 311
+pyzmq                   27.1.0
+ruff                    0.12.12
+scikit-learn            1.7.1
+scipy                   1.16.1
+six                     1.17.0
+stack-data              0.6.3
+threadpoolctl           3.6.0
+tornado                 6.5.2
+traitlets               5.14.3
+wcwidth                 0.2.13
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> 
+
+I changed the pyproject.toml:
+requires-python = ">=3.12,<3.13"
+then I run uv sync, with result below:
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> uv venv .venv --python=3.12
+>>
+Using CPython 3.12.11
+Creating virtual environment at: .venv
+✔ A virtual environment already exists at `.venv`. Do you want to replace it? · yes
+Activate with: .venv\Scripts\activate
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> uv sync
+Using CPython 3.13.7 interpreter at: C:\Users\avtnl\AppData\Local\Programs\Python\Python313\python.exe
+error: The Python request from `.python-version` resolved to Python 3.13.7, which is incompatible with the project's Python requirement: `==3.12.*` (from `project.requires-python`)
+Use `uv python pin` to update the `.python-version` file to a compatible version
+(My_Project) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project>  
+
+I restarted VS Code and have run the 2 instructions below:
+
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks> ..\.venv\Scripts\Activate.ps1
+(.venv) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks> uv sync
+Resolved 101 packages in 0.86ms
+Uninstalled 1 package in 109ms
+ - pip==25.0.1
+
+Why is "which python" not responding?
+(.venv) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks> which python
+which : The term 'which' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was 
+included, verify that the path is correct and try again.
+At line:1 char:1
++ which python
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (which:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+(.venv) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks> dir .venv\Scripts\python.exe
+dir : Cannot find path 'C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks\.venv\Scripts\python.exe' because it does not exist.
+At line:1 char:1
++ dir .venv\Scripts\python.exe
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\avtnl\...ipts\python.exe:String) [Get-ChildItem], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand
+
+(.venv) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\notebooks>

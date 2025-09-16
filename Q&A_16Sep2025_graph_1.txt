@@ -1,0 +1,34 @@
+Example timestamp: 2020-01-26 16:49:53+00:00, likely a string or datetime
+
+Below works fine:
+import pandas as pd
+
+# Define the time ranges
+time_ranges = ["00:00", "06:00", "08:00", "17:30", "22:00", "23:59"]
+# Define the category labels
+categories = ["night", "morning", "worktimes", "evening", "late"]
+# Categorize the timestamp column
+merged_df["timestamp_category"] = pd.cut(
+    merged_df["timestamp"].dt.time.astype(str),
+    bins=time_ranges,
+    labels=categories,
+    right=False,
+)
+# Display the updated dataframe
+merged_df
+
+How to add 2 columns: year and month, where timestamp has format YYYY-MM-DD HH:MM:SS+HH:MM?
+
+# Group by year and month, then count rows
+message_counts = merged_df.groupby(["year", "month"]).size().reset_index(name="message_count")
+… runs smoothly but doesn't display anything in the notebook!
+
+Meaning # Display the result should only show first 25 rows!
+# Group by year and month, then count rows
+message_counts = merged_df.groupby(["year", "month"]).size().reset_index(name="message_count")
+
+# Sort by message_count descending
+message_counts = message_counts.sort_values("message_count", ascending=False)
+
+# Display the result
+message_counts

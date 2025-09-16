@@ -1,0 +1,93 @@
+I changed pyproject.toml to:
+
+[project]
+name = "my-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "click>=8.1.8",
+    "loguru>=0.7.3",
+    "mads-datasets>=0.3.14",
+    "networkx>=3.4.2",
+    "numpy>=2.2.1",
+    "pandas>=2.2.3",
+    "plotly>=5.24.1",
+    "pyarrow>=18.1.0",
+    "pydantic>=2.10.4",
+    "scikit-learn>=1.6.0",
+    "seaborn>=0.13.2",
+    "statsmodels>=0.14.4",
+    "streamlit>=1.43.1",
+]
+
+[project.scripts]
+"analyzer" = "wa_analyzer.preprocess:main"
+"graphdashboard" = "wa_analyzer.network_cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+After:
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> uv sync --all-extras
+
+Output terminal as below. Any clue how to resolve?
+Resolved 74 packages in 353ms
+  × Failed to build `my-project @ file:///C:/Users/avtnl/Documents/HU/Data%20Analytics/My_Project`
+  ├─▶ The build backend returned an error                                                                                                        
+  ╰─▶ Call to `hatchling.build.build_editable` failed (exit code: 1)
+
+      [stderr]
+      Traceback (most recent call last):
+        File "<string>", line 11, in <module>
+          wheel_filename = backend.build_editable("C:\\Users\\avtnl\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpqlY4Dp", {}, None)
+        File "C:\Users\avtnl\AppData\Local\uv\cache\builds-v0\.tmpQZDxM2\Lib\site-packages\hatchling\build.py", line 83, in build_editable       
+          return os.path.basename(next(builder.build(directory=wheel_directory, versions=['editable'])))
+                                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "C:\Users\avtnl\AppData\Local\uv\cache\builds-v0\.tmpQZDxM2\Lib\site-packages\hatchling\builders\plugin\interface.py", line 155,    
+      in build
+          artifact = version_api[version](directory, **build_data)
+        File "C:\Users\avtnl\AppData\Local\uv\cache\builds-v0\.tmpQZDxM2\Lib\site-packages\hatchling\builders\wheel.py", line 496, in
+      build_editable
+          return self.build_editable_detection(directory, **build_data)
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "C:\Users\avtnl\AppData\Local\uv\cache\builds-v0\.tmpQZDxM2\Lib\site-packages\hatchling\builders\wheel.py", line 507, in
+      build_editable_detection
+          for included_file in self.recurse_selected_project_files():
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+        File "C:\Users\avtnl\AppData\Local\uv\cache\builds-v0\.tmpQZDxM2\Lib\site-packages\hatchling\builders\plugin\interface.py", line 180,    
+      in recurse_selected_project_files
+          if self.config.only_include:
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+        File "C:\Users\avtnl\AppData\Local\Programs\Python\Python313\Lib\functools.py", line 1026, in __get__
+          val = self.func(instance)
+        File "C:\Users\avtnl\AppData\Local\uv\cache\builds-v0\.tmpQZDxM2\Lib\site-packages\hatchling\builders\config.py", line 713, in
+      only_include
+          only_include = only_include_config.get('only-include', self.default_only_include()) or self.packages
+                                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+        File "C:\Users\avtnl\AppData\Local\uv\cache\builds-v0\.tmpQZDxM2\Lib\site-packages\hatchling\builders\wheel.py", line 262, in
+      default_only_include
+          return self.default_file_selection_options.only_include
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "C:\Users\avtnl\AppData\Local\Programs\Python\Python313\Lib\functools.py", line 1026, in __get__
+          val = self.func(instance)
+        File "C:\Users\avtnl\AppData\Local\uv\cache\builds-v0\.tmpQZDxM2\Lib\site-packages\hatchling\builders\wheel.py", line 250, in
+      default_file_selection_options
+          raise ValueError(message)
+      ValueError: Unable to determine which files to ship inside the wheel using the following heuristics:
+      https://hatch.pypa.io/latest/plugins/builder/wheel/#default-file-selection
+
+      The most likely cause of this is that there is no directory that matches the name of your project (my_project).
+
+      At least one file selection option must be defined in the `tool.hatch.build.targets.wheel` table, see:
+      https://hatch.pypa.io/latest/config/build/
+
+      As an example, if you intend to ship a directory named `foo` that resides within a `src` directory located at the root of your project,    
+      you can define the following:
+
+      [tool.hatch.build.targets.wheel]
+      packages = ["src/foo"]
+
+      hint: This usually indicates a problem with the package or the build environment.

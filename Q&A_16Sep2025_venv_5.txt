@@ -1,0 +1,89 @@
+Issue with:
+plt.figure(figsize=(12, 6))
+sns.barplot(y=p1.index[:k], x="message", data=topk)
+plt.xticks(rotation=90)
+plt.title("Sending the most messages...")
+
+Error:
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[21], line 1
+----> 1 plt.figure(figsize=(12, 6))
+      2 sns.barplot(y=p1.index[:k], x="message", data=topk)
+      3 plt.xticks(rotation=90)
+
+File c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\matplotlib\pyplot.py:1042, in figure(num, figsize, dpi, facecolor, edgecolor, frameon, FigureClass, clear, **kwargs)
+
+File c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\matplotlib\pyplot.py:551, in new_figure_manager(*args, **kwargs)
+
+File c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\matplotlib\pyplot.py:528, in _warn_if_gui_out_of_main_thread()
+
+File c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\matplotlib\pyplot.py:369, in _get_backend_mod()
+
+File c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\matplotlib\pyplot.py:425, in switch_backend(newbackend)
+
+File c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\matplotlib\backends\registry.py:317, in load_backend_module(self, backend)
+
+File ~\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\importlib\__init__.py:90, in import_module(name, package)
+     88             break
+     89         level += 1
+---> 90 return _bootstrap._gcd_import(name[level:], package, level)
+
+File <frozen importlib._bootstrap>:1387, in _gcd_import(name, package, level)
+...
+----> 8 from matplotlib.backends import backend_agg
+      9 from matplotlib.backends.backend_agg import FigureCanvasAgg
+     10 from matplotlib._pylab_helpers import Gcf
+
+ImportError: cannot import name 'backend_agg' from 'matplotlib.backends' (c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\matplotlib\backends\__init__.py)
+Output is truncated. View as a scrollable element or open in a text editor. Adjust cell output settings…
+
+++++++++++
+
+Package                   Version
+------------------------- -----------
+asttokens                 3.0.0
+attrs                     25.3.0
+colorama                  0.4.6
+comm                      0.2.3
+debugpy                   1.8.16
+decorator                 5.2.1
+executing                 2.2.1
+fastjsonschema            2.21.2
+ipykernel                 6.30.1
+ipython                   9.5.0
+ipython_pygments_lexers   1.1.1
+jedi                      0.19.2
+joblib                    1.5.2
+jsonschema                4.25.1
+jsonschema-specifications 2025.9.1
+jupyter_client            8.6.3
+jupyter_core              5.8.1
+matplotlib-inline         0.1.7
+nbformat                  5.10.4
+nest-asyncio              1.6.0
+numpy                     2.3.2
+packaging                 25.0
+parso                     0.8.5
+pip                       25.2
+platformdirs              4.4.0
+prompt_toolkit            3.0.52
+psutil                    7.0.0
+pure_eval                 0.2.3
+pygame                    2.6.1
+Pygments                  2.19.2
+python-dateutil           2.9.0.post0
+pywin32                   311
+pyzmq                     27.1.0
+referencing               0.36.2
+rpds-py                   0.27.1
+ruff                      0.12.12
+scikit-learn              1.7.1
+scipy                     1.16.1
+six                       1.17.0
+stack-data                0.6.3
+threadpoolctl             3.6.0
+tornado                   6.5.2
+traitlets                 5.14.3
+wcwidth                   0.2.13
+(.venv) PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> 

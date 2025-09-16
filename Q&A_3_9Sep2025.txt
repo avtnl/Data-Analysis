@@ -1,0 +1,39 @@
+Understood!
+
+pyproject.toml:
+[project]
+name = "my-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "click>=8.1.8",
+    "loguru>=0.7.3",
+    "mads-datasets>=0.3.14",
+    "networkx>=3.4.2",
+    "numpy>=2.2.1",
+    "pandas>=2.2.3",
+    "plotly>=5.24.1",
+    "pyarrow>=18.1.0",
+    "pydantic>=2.10.4",
+    "scikit-learn>=1.6.0",
+    "seaborn>=0.13.2",
+    "statsmodels>=0.14.4",
+    "streamlit>=1.43.1",
+]
+
+[project.scripts]
+"analyzer" = "wa_analyzer.preprocess:main"
+"graphdashboard" = "wa_analyzer.network_cli:main"
+
+Error I am getting after:
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> uv sync --all-extras
+
+warning: Skipping installation of entry points (`project.scripts`) because this project is not packaged; to install entry points, set `tool.uv.package = true` or define a `build-system`
+
+Next command planned:
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> analyzer --device ios
+
+What do you recommand me to do?
+

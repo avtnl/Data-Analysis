@@ -1,0 +1,54 @@
+In below I like to exclude author == "MAAP". How to do so?
+
+df["message_length"] = df["message"].str.len()
+p1 = (
+    df[["author", "message_length"]]
+    .groupby("author")
+    .mean()
+    .sort_values("message_length", ascending=False)
+)
+k = 15
+topk = p1[:k]
+sns.barplot(y=p1.index[:k], x="message_length", data=topk)
+plt.xlabel("Average message length")
+plt.title("Sending the longest messages...")
+
+import plotly.express as px
+
+fig = px.bar(
+    p4_filtered, y="author", x="value", color="timestamp_category", barmode="stack"
+)
+fig.show()
+
+generates an error:
+ValueError                                Traceback (most recent call last)
+Cell In[19], line 6
+      1 import plotly.express as px
+      3 fig = px.bar(
+      4     p4_filtered, y="author", x="value", color="timestamp_category", barmode="stack"
+      5 )
+----> 6 fig.show()
+
+File c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\plotly\basedatatypes.py:3420, in BaseFigure.show(self, *args, **kwargs)
+   3387 """
+   3388 Show a figure using either the default renderer(s) or the renderer(s)
+   3389 specified by the renderer argument
+   (...)   3416 None
+   3417 """
+   3418 import plotly.io as pio
+-> 3420 return pio.show(self, *args, **kwargs)
+
+File c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\plotly\io\_renderers.py:415, in show(fig, renderer, validate, **kwargs)
+    410     raise ValueError(
+    411         "Mime type rendering requires ipython but it is not installed"
+    412     )
+    414 if not nbformat or Version(nbformat.__version__) < Version("4.2.0"):
+--> 415     raise ValueError(
+    416         "Mime type rendering requires nbformat>=4.2.0 but it is not installed"
+    417     )
+    419 display_jupyter_version_warnings()
+    421 ipython_display.display(bundle, raw=True)
+
+ValueError: Mime type rendering requires nbformat>=4.2.0 but it is not installed
+
+Any clue what to do to prevent this?

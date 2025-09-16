@@ -1,0 +1,69 @@
+Let's do:
+# Filter out "MAAP"
+df_filtered = df[df["author"] != "MAAP"]
+df=df_filtered
+
+Already in:
+# Filter out "MAAP"
+df_filtered = df[df["author"] != "MAAP"]
+
+# Get top-k authors
+topk_authors = (
+    df_filtered[["author", "message"]]
+    .groupby("author")
+    .count()
+    .sort_values("message", ascending=False)
+    .index[:k]
+)
+
+# Tag top-k authors
+df_filtered["is_topk"] = df_filtered["author"].apply(lambda x: x in topk_authors)
+
+# Preview
+df_filtered.head()
+
+===============
+Below was running smoothly before changing:
+# Filter out "MAAP"
+df = df[df["author"] != "MAAP"]
+
+plt.figure(figsize=(12, 6))
+sns.barplot(y=p1.index[:k], x="message", data=topk)
+plt.xticks(rotation=90)
+plt.title("Sending the most messages...")
+
+Error:
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[33], line 2
+      1 plt.figure(figsize=(12, 6))
+----> 2 sns.barplot(y=p1.index[:k], x="message", data=topk)
+      3 plt.xticks(rotation=90)
+      4 plt.title("Sending the most messages...")
+
+File c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\seaborn\categorical.py:2341, in barplot(data, x, y, hue, order, hue_order, estimator, errorbar, n_boot, seed, units, weights, orient, color, palette, saturation, fill, hue_norm, width, dodge, gap, log_scale, native_scale, formatter, legend, capsize, err_kws, ci, errcolor, errwidth, ax, **kwargs)
+   2338 if estimator is len:
+   2339     estimator = "size"
+-> 2341 p = _CategoricalAggPlotter(
+   2342     data=data,
+   2343     variables=dict(x=x, y=y, hue=hue, units=units, weight=weights),
+   2344     order=order,
+   2345     orient=orient,
+   2346     color=color,
+   2347     legend=legend,
+   2348 )
+   2350 if ax is None:
+   2351     ax = plt.gca()
+
+File c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Lib\site-packages\seaborn\categorical.py:67, in _CategoricalPlotter.__init__(self, data, variables, order, orient, require_numeric, color, legend)
+     56 def __init__(
+     57     self,
+...
+    237 
+    238     # Ignore empty data structures
+    239     if isinstance(val, Sized) and len(val) == 0:
+
+ValueError: Could not interpret value `message` for `x`. An entry with this name does not appear in `data`.
+Output is truncated. View as a scrollable element or open in a text editor. Adjust cell output settings…
+
+Why was this running smoothly before and now causing an error?

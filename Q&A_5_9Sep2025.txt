@@ -1,0 +1,38 @@
+Add:
+[tool.hatch.build.targets.wheel]
+packages = ["src/wa_analyzer"]
+
+before or after:
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+I tried 2 things:
+1)
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> .venv\Scripts\Activate.ps1
+
+Output:
+.venv\Scripts\Activate.ps1 : File C:\Users\avtnl\Documents\HU\Data Analytics\My_Project\.venv\Scripts\activate.ps1 cannot be loaded because runn
+ing scripts is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.     
+At line:1 char:1
++ .venv\Scripts\Activate.ps1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+
+2)
+PS C:\Users\avtnl\Documents\HU\Data Analytics\My_Project> .venv/bin/activate
+
+Output:
+.venv/bin/activate : The term '.venv/bin/activate' is not recognized as the name of a cmdlet, function, script file, or operable program. Check 
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ .venv/bin/activate
++ ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (.venv/bin/activate:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+What do you recommand me to do?
+
+line: '[16-11-2014, 14:00:43] Irene Bienema: \u200eIrene Bienema heeft deze groep gemaakt\n'
+tsreg: '^\\[(.+?)\\]\\s(.*?):\\s(.*)'

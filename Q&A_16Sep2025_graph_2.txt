@@ -1,0 +1,84 @@
+cd "Documents\HU\Data Analytics\My_Project"
+
+# Step 8: Print only "crazy" days per year
+print("\n🔥 Daily Breakdown of Days by Year in category 'crazy':")
+for year in all_years:
+    crazy_days = daily_counts[
+        (daily_counts["year"] == year) &
+        (daily_counts["volume_category"] == "crazy")
+    ]
+    if not crazy_days.empty:
+        print(f"\nYear {year}:")
+        print(crazy_days[["date", "message_count"]].sort_values("date"))
+
+# Step 9: Save all "crazy" days to CSV
+# Save to CSV with full path
+crazy_days_all[["year", "date", "message_count"]].to_csv(
+    r"c:\Users\avtnl\Documents\HU\Data Analytics\My_Project\crazy_days_by_year.csv",
+    index=False
+)
+
+==========
+
+Base (number of days per year for each category):
+2019	22	12	2	3
+2020	28	36	14	12
+2021	39	22	23	10
+2022	23	23	8	4
+2023	43	26	9	2
+2024	41	24	16	5
+2025	29	18	10	3
+
+Code below generates:
+2019	19	8	2	2
+2020	24	19	6	5
+2021	33	14	15	4
+2022	18	15	4	2
+2023	32	11	4	1
+2024	37	10	9	3
+2025	22	6	2	1
+
+# Step 1: Get all messages by Anthony
+df["date"] = df["timestamp"].dt.date
+anthony_msgs = df[df["author"] == "Anthony van Tilburg"]
+
+# Step 2: Count Anthony's messages per day
+anthony_counts = anthony_msgs.groupby("date").size().reset_index(name="anthony_count")
+
+# Step 3: Merge with daily_counts
+daily_counts = daily_counts.merge(anthony_counts, on="date", how="left")
+daily_counts["anthony_count"] = daily_counts["anthony_count"].fillna(0).astype(int)
+
+# Step 4: Create flags for zero participation
+daily_counts["anthony_zero"] = daily_counts["anthony_count"] == 0
+
+# Step 5: Count zero-participation days per category per year
+zero_summary = (
+    daily_counts[daily_counts["anthony_zero"]]
+    .groupby(["year", "volume_category"])
+    .size()
+    .reset_index(name="zero_days")
+    .pivot(index="year", columns="volume_category", values="zero_days")
+    .fillna(0)
+    .astype(int)
+)
+
+# Step 6: Reindex to include all years
+zero_summary = zero_summary.reindex(all_years, fill_value=0)
+
+# Step 7: Rename columns
+zero_summary.columns = [f"{col}-AvT" for col in zero_summary.columns]
+
+# Step 8: Display the new summary
+print("📊 Days with Zero Participation by Anthony van Tilburg")
+print(zero_summary)
+
+Does this mean that Anthoiny van Tilburg didn't participate in 19 of the 22 day's in 2019 in the category: "some"? 
+
+
++++++++++
+
+Some additional requirements:
+Plot "Total Days" in black
+Plot M, AB and PB in Gray
+Plot 
